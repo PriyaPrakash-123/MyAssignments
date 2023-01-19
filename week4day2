@@ -1,0 +1,34 @@
+package week4.week4day2;
+
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Erailtable {
+
+	public static void main(String[] args) throws InterruptedException {
+		ChromeDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://erail.in/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.findElement(By.xpath("//input[@id='chkSelectDateOnly']")).click();
+		driver.findElement(By.xpath("//input[@id='txtStationFrom']")).clear();
+		driver.findElement(By.id("txtStationFrom")).sendKeys("Ms", Keys.ENTER);
+		driver.findElement(By.xpath("//input[@id='txtStationTo']")).clear();
+		driver.findElement(By.id("txtStationTo")).sendKeys("Cape", Keys.ENTER);
+		driver.findElement(By.xpath("//input[@id='buttonFromTo']")).click();
+		Thread.sleep(2000);
+		List<WebElement> TrainNameColumn = driver.findElements(By.xpath("//table[@class='DataTable TrainList TrainListHeader stickyTrainListHeader']//tr//td[2]")); 
+		System.out.println("Train Name List size:" +TrainNameColumn.size() );
+		for(WebElement each : TrainNameColumn)
+		{
+			String text = each.getText();
+			System.out.println(text);
+		}
+	}
+
+}
